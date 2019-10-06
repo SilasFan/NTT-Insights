@@ -1,18 +1,39 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
-  </div>
+    <div class="home">
+        <List v-on:openlogin="openLogin" />
+        <mu-dialog width="100%" transition="slide-bottom" fullscreen :open.sync="openFullscreen">
+            <Login v-on:closelogin="closeLogin" />
+        </mu-dialog>
+    </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import { Component, Vue, Provide } from 'vue-property-decorator';
+import List from '@/components/List.vue';
+import Login from './Login.vue';
 
 @Component({
-  components: {
-    HelloWorld,
-  },
+    components: {
+        List,
+        Login,
+    },
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+    @Provide() public openFullscreen: boolean = false;
+
+    public closeLogin() {
+        this.openFullscreen = false;
+    }
+
+    public openLogin() {
+        this.openFullscreen = true;
+    }
+}
 </script>
+
+<style scoped>
+.home {
+    width: 100%;
+    height: 100%;
+}
+</style>
