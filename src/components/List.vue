@@ -13,6 +13,7 @@
 
 <script lang="ts">
 import { Component, Vue, Provide } from 'vue-property-decorator';
+import { getQueryFunc } from '../query';
 import NavBar from './Nav.vue';
 import Footer from './Footer.vue';
 import DataList from './DataList.vue';
@@ -76,6 +77,13 @@ export default class List extends Vue {
 
     public openLogin() {
         this.$emit('openlogin');
+    }
+
+    public created() {
+        /*const query = getQueryFunc();
+        query.then(data => {
+            console.log(data);
+        });*/
     }
 
     get renderData() {

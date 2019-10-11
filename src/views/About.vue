@@ -19,6 +19,7 @@
 
 <script lang="ts">
 import { Component, Vue, Provide } from 'vue-property-decorator';
+import { getUserName } from '../query';
 
 @Component({})
 export default class About extends Vue {
@@ -28,7 +29,7 @@ export default class About extends Vue {
     @Provide() public isLogin: boolean = false;
 
     get loginMessage() {
-        return !this.isLogin ? '登录' : '201733333';
+        return !this.isLogin ? '登录' : getUserName();
     }
 }
 </script>
