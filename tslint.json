@@ -13,6 +13,7 @@
         "quotemark": [true, "single"],
         "arrow-parens": false,
         "semicolon": false,
-        "class-name": false
+        "class-name": false,
+        "no-console": false
     }
 }

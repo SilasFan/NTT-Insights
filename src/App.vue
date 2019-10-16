@@ -4,6 +4,22 @@
     </div>
 </template>
 
+<script lang="ts">
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import { Getter, Mutation } from 'vuex-class';
+import { getToken } from './query';
+
+@Component({})
+export default class App extends Vue {
+    @Mutation public setToken: any;
+
+    private beforeMount() {
+        this.setToken(getToken());
+    }
+}
+</script>
+
 <style>
 #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;

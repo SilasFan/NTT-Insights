@@ -1,7 +1,7 @@
 <template>
     <div class="dlist">
         <mu-expansion-panel v-for="event in Stage">
-            <div slot="header">{{ event.head }}</div>
+            <div slot="header">{{ event.title }}</div>
             {{ event.content }}
         </mu-expansion-panel>
     </div>
@@ -11,7 +11,7 @@
 import { Component, Vue, Provide, Prop } from 'vue-property-decorator';
 
 interface event {
-    head: string;
+    title: string;
     content: string;
 }
 

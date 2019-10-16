@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: '/pwatest',
+  publicPath: '/NTT-Insights/',
   outputDir: undefined,
   assetsDir: undefined,
   runtimeCompiler: undefined,

@@ -8,7 +8,7 @@ AV.init({
 
 interface Insight {
     title: string;
-    description: string;
+    content: string;
 }
 
 export function getLoginFunc(username: string, passwd: string) {
@@ -19,13 +19,14 @@ export function getInsertFunc(insight: Insight) {
     const Object = AV.Object.extend('insight');
     const obj = new Object();
     obj.set('title', insight.title);
-    obj.set('description', insight.description);
+    obj.set('content', insight.content);
     return obj.save();
 }
 
 export function getQueryFunc() {
     const query = new AV.Query('insight');
     query.ascending('titile');
+    query.select(['title', 'content', 'Stage']);
     return query.find();
 }
 

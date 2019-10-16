@@ -19,6 +19,7 @@
 
 <script lang="ts">
 import { Component, Vue, Provide } from 'vue-property-decorator';
+import { Getter } from 'vuex-class';
 import { getUserName } from '../query';
 
 @Component({})
@@ -26,7 +27,7 @@ export default class About extends Vue {
     @Provide() public aboutMessage: string =
         '为什么想做这个应用呢？\r\n实际上这是我自己灵感突发想要做一个可以随手记录灵感的app（好像听起来有点绕口），然后又觉得好像对大家都挺有用的，所以就快速做了一个简单的版本\r\n有空的话应该会持续迭代的，也有一种建设NTT基础设施的感觉吧';
 
-    @Provide() public isLogin: boolean = false;
+    @Getter public isLogin: any;
 
     get loginMessage() {
         return !this.isLogin ? '登录' : getUserName();

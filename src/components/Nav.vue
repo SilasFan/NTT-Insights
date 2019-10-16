@@ -9,13 +9,14 @@
         </mu-appbar>
 
         <mu-dialog transition="slide-bottom" fullscreen width="100%" :open.sync="newIdea">
-            <NewIdea v-on:quit="newIdea = false" />
+            <NewIdea v-on:quit="newIdea = false" v-on:refresh="refresh" />
         </mu-dialog>
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Provide } from 'vue-property-decorator';
+import { Getter } from 'vuex-class';
 import NewIdea from './NewIdea.vue';
 
 @Component({
@@ -25,7 +26,11 @@ import NewIdea from './NewIdea.vue';
 })
 export default class Navbar extends Vue {
     @Provide() public newIdea: boolean = false;
-    @Provide() public isLogin: boolean = true;
+    @Getter public isLogin: any;
+
+    public refresh() {
+        this.$emit('refresh');
+    }
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
     <div class="list">
-        <NavBar />
+        <NavBar v-on:refresh="refresh" />
 
         <div class="content">
             <DataList :stage="renderData" v-if="!showabout" />
@@ -20,8 +20,14 @@ import DataList from './DataList.vue';
 import About from '@/views/About.vue';
 
 interface event {
-    head: string;
+    title: string;
     content: string;
+}
+
+interface insight {
+    title: string;
+    content: string;
+    Stage: number;
 }
 
 @Component({
@@ -35,36 +41,7 @@ interface event {
 export default class List extends Vue {
     @Provide() public tab: number = 1;
     @Provide() public showabout: boolean = false;
-    @Provide() public stage1: event[] = [
-        {
-            head: 'test',
-            content: 'this is a test sample',
-        },
-        {
-            head: 'test2',
-            content: 'test2',
-        },
-    ];
-    @Provide() public stage2: event[] = [
-        {
-            head: 'test2',
-            content: 'this is a test sample',
-        },
-        {
-            head: 'test2',
-            content: 'test2',
-        },
-    ];
-    @Provide() public stage3: event[] = [
-        {
-            head: 'test3',
-            content: 'this is a test sample',
-        },
-        {
-            head: 'test2',
-            content: 'test2',
-        },
-    ];
+    @Provide() public backData: insight[] = [];
 
     public changeTab(tab: number) {
         if (tab < 4) {
@@ -79,11 +56,26 @@ export default class List extends Vue {
         this.$emit('openlogin');
     }
 
-    public created() {
-        /*const query = getQueryFunc();
-        query.then(data => {
-            console.log(data);
-        });*/
+    public refresh() {
+        const query = getQueryFunc();
+        const that = this;
+        query
+            .then(data => {
+                that.backData = data.map(val => {
+                    return {
+                        title: val.get('title'),
+                        content: val.get('content'),
+                        Stage: val.get('Stage'),
+                    };
+                });
+            })
+            .catch(err => {
+                console.log('Request Fail!');
+            });
+    }
+
+    public beforeMount() {
+        this.refresh();
     }
 
     get renderData() {
@@ -94,6 +86,18 @@ export default class List extends Vue {
         } else {
             return this.stage3;
         }
+    }
+
+    get stage1(): event[] {
+        return this.backData.filter(val => val.Stage === 1);
+    }
+
+    get stage2(): event[] {
+        return this.backData.filter(val => val.Stage === 2);
+    }
+
+    get stage3(): event[] {
+        return this.backData.filter(val => val.Stage === 3);
     }
 }
 </script>

@@ -15,7 +15,7 @@
             <br />
         </div>
 
-        <mu-button>
+        <mu-button @click="submit">
             <mu-icon value="near_me" left></mu-icon>
             Submit
         </mu-button>
@@ -24,13 +24,31 @@
 
 <script lang="ts">
 import { Component, Vue, Provide } from 'vue-property-decorator';
+import { getInsertFunc } from '../query';
 
 @Component({})
 export default class NewIdea extends Vue {
     @Provide() public title: string = '';
     @Provide() public content: string = '';
 
+    public submit() {
+        if (this.title !== '' && this.content !== '') {
+            getInsertFunc({ title: this.title, content: this.content })
+                .then(data => {
+                    alert('Submit Success!');
+                    this.quit();
+                })
+                .catch(err => {
+                    console.log(err);
+                    alert('Fail!');
+                });
+        } else {
+            alert('不能为空！');
+        }
+    }
+
     public quit() {
+        this.$emit('refresh');
         this.$emit('quit');
     }
 }

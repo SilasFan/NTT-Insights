@@ -6,15 +6,14 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         token: '',
-        isLogin: false,
     },
     mutations: {
-        changeLogin(state, newval: boolean) {
-            state.isLogin = newval;
+        setToken(state, newToken: string) {
+            state.token = newToken;
         },
     },
     actions: {},
     getters: {
-        hasToken: state => state.token === '',
+        isLogin: state => !(state.token === ''),
     },
 });

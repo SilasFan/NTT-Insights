@@ -24,21 +24,27 @@
 
 <script lang="ts">
 import { Component, Vue, Provide } from 'vue-property-decorator';
+import { State, Getter, Mutation } from 'vuex-class';
+import { getLoginFunc, getToken } from '../query';
 
 @Component({})
 export default class Login extends Vue {
     @Provide() public user: string = '';
     @Provide() public buttonLoading: boolean = false;
+    @Mutation public setToken: any;
 
     public login(): void {
         this.buttonLoading = true;
-        setTimeout(() => {
-            this.buttonLoading = false;
-        }, 1000);
 
-        if (this.user.length > 2) {
-            this.quit();
-        }
+        getLoginFunc(this.user, this.user)
+            .then(data => {
+                this.setToken(getToken());
+                this.quit();
+            })
+            .catch(error => {
+                alert('用户不存在！');
+                this.buttonLoading = false;
+            });
     }
 
     public quit() {
